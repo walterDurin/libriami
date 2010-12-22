@@ -1,0 +1,44 @@
+dn: cn=Hans Thunderbird3,ou=test,dc=mein_Server,dc=nu
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+objectclass: mozillaAbPersonAlpha
+givenName: Hans
+sn: Thunderbird3
+cn: Hans Thunderbird3
+mozillaNickname:: SMOkbnNjaGVuLTM=
+mail: hans.thunderbird@online.de
+mozillaSecondEmail: hans.thunderbird_2@online.de
+nsAIMid: Messenger
+telephoneNumber: 0123456789
+homePhone: 0222222222
+facsimiletelephonenumber: 0333333333
+pager: 0160/12345
+mobile: 0171/12345
+mozillaHomeStreet:: UHJpdmF0c3RyYcOfZV8x
+mozillaHomeStreet2:: UHJpdmF0c3RyYcOfZV8y
+mozillaHomeLocalityName: Privatort
+mozillaHomeState: PrivatBundesland
+mozillaHomePostalCode: P12345
+mozillaHomeCountryName: Privat_Land
+street: Dienst_Adresse_Zeile1
+mozillaWorkStreet2: Dienst_Adresse_Zeile2
+l: Dienst_Ort
+st: Dienst_Bundesland
+postalCode: D1234
+c: de
+title: Dienst_Titel
+ou: Dienst_Abteilung
+o: Dienst_Organisation
+mozillaWorkUrl: www.dienstseite.site
+mozillaHomeUrl: www.privatseite.site
+# birthyear: 1950
+# birthmonth: 11
+# birthday: 01
+mozillaCustom1: Benutzerdefiniert_1
+mozillaCustom2: Benutzerdefiniert_2
+mozillaCustom3: Benutzerdefiniert_3
+mozillaCustom4: Benutzerdefiniert_4
+description: Description
+
