@@ -49,7 +49,7 @@ public class TestVcardData extends TestCase {
 		assertEquals("N", vc.getName());
 		assertEquals("CHARSET=UTF-8", vc.getParameter().get(0));
 		assertEquals("ENCODING=QUOTED-PRINTABLE", vc.getParameter().get(1));
-		assertEquals("Göttlicher", vc.getValue(0));
+		assertEquals("G\u00F6ttlicher", vc.getValue(0));
 	}
 
 	public void testEncoded2() throws IOException {
