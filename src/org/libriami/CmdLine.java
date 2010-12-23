@@ -40,11 +40,10 @@ import org.libriami.coder.Encoder;
 import org.libriami.coder.EncoderFactory;
 import org.libriami.model.AddressBook;
 import org.libriami.model.Contact;
-import org.libriami.model.tools.compare.FixDuplicates;
+import org.libriami.model.tools.FixDuplicates;
 
 /**
- * @author pfd2pl
- * 
+ * Libriami command line tool. This class is used if you start the jar file with "java -jar".
  */
 public class CmdLine {
 

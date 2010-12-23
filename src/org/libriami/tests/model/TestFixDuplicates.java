@@ -21,8 +21,8 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
+import org.libriami.model.tools.FixDuplicates;
 import org.libriami.model.tools.compare.ApproxMatchable;
-import org.libriami.model.tools.compare.FixDuplicates;
 
 /**
  * 

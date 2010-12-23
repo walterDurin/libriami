@@ -14,25 +14,23 @@
  * limitations under the License.
  */
 
-package org.libriami.model.tools;
+package org.libriami.examples;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.util.List;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 
 import org.libriami.coder.ConsoleCoderListener;
 import org.libriami.coder.Decoder;
 import org.libriami.coder.DecoderFactory;
 import org.libriami.model.AddressBook;
+import org.libriami.model.Birthday;
 import org.libriami.model.Contact;
-import org.libriami.model.tools.compare.FixDuplicates;
 
-public class ListContacts {
+public class ListBirthdays {
 
 	public static void main(String[] args) throws IOException {
 		if (args.length < 1) {
@@ -44,38 +42,34 @@ public class ListContacts {
 
 		File f = new File(args[0]);
 		Decoder decoder = DecoderFactory.getDecoder(f);
-		BufferedReader in = getUTF8Reader(f);
+		BufferedReader in = DecoderFactory.getUTF8Reader(f);
 		addressBook = decoder.decode(in, new ConsoleCoderListener());
 		in.close();
 
-		// addressBook = FixDuplicateContacts.fix(addressBook);
-		FixDuplicates<Contact> fixDuplicates = new FixDuplicates<Contact>();
-		List<Contact> fixedContacts = fixDuplicates.fix(addressBook.getContacts());
-		addressBook.setContacts(fixedContacts);
+		// Sort them
+
+		Collections.sort(addressBook.getContacts(), new Comparator<Contact>() {
+			public int compare(Contact o1, Contact o2) {
+				Birthday b1 = o1.getBirthday();
+				Birthday b2 = o2.getBirthday();
+				if (b1 == null)
+					return -1;
+				if (b2 == null)
+					return 1;
+
+				Calendar bc1 = b1.getNextBirthday();
+				Calendar bc2 = b2.getNextBirthday();
+				return bc1.compareTo(bc2);
+			}
+		});
 
 		// Now dump the contacts to STDOUT
+
 		for (Contact c : addressBook.getContacts()) {
-			System.out.println(c);
+			String s = c.toString();
+			if (c.getBirthday() != null)
+				System.out.println(s);
 		}
-		System.out.flush();
 	}
 
-	/**
-	 * Creates a UTF-8 buffered input reader from a file.
-	 */
-	private static BufferedReader getUTF8Reader(File f) throws UnsupportedEncodingException, FileNotFoundException {
-		InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(f), "UTF-8");
-		BufferedReader in = new BufferedReader(inputStreamReader);
-		return in;
-	}
-
-	// // XXX test with example5.ldif
-	// private static BufferedWriter getStdOutWriter()
-	// throws IOException {
-	// // OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
-	// // System.out, "UTF-8");
-	// // return new BufferedWriter(outputStreamWriter);
-	//
-	// return new BufferedWriter(new FileWriter("test.ldif"));
-	// }
 }

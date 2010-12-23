@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.libriami.model.tools;
+package org.libriami.examples;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -55,7 +55,7 @@ public class Convert {
 		addressBook = decoder.decode(in, new ConsoleCoderListener());
 		in.close();
 
-		// Now dump the contacts to STDOUT
+		// Now encode the contacts to STDOUT
 		Encoder encoder = null;
 		if (command.equals("-ldif"))
 			encoder = EncoderFactory.getLdifEncoder();
@@ -65,9 +65,11 @@ public class Convert {
 			System.err.println("ERROR: Unknown command '" + command + "'");
 			return;
 		}
-
-		encoder.encode(addressBook, getStdOutWriter());
-		System.out.flush();
+		BufferedWriter out = getStdOutWriter();
+		;
+		encoder.encode(addressBook, out);
+		out.flush();
+		out.close();
 	}
 
 	/**
@@ -81,9 +83,8 @@ public class Convert {
 
 	// XXX test with example5.ldif
 	private static BufferedWriter getStdOutWriter() throws UnsupportedEncodingException {
-		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(System.out, "UTF-8");
-		// OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
-		// System.out);
+		// OutputStreamWriter outputStreamWriter = new OutputStreamWriter(System.out, "UTF-8");
+		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(System.out);
 		return new BufferedWriter(outputStreamWriter);
 	}
 }

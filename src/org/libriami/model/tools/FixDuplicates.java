@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.libriami.model.tools.compare;
+package org.libriami.model.tools;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.libriami.model.Settings;
+import org.libriami.model.tools.compare.ApproxMatchable;
 
 public class FixDuplicates<T extends ApproxMatchable> {
 

@@ -27,7 +27,7 @@ import org.libriami.coder.DecoderFactory;
 import org.libriami.model.AddressBook;
 import org.libriami.model.Contact;
 import org.libriami.model.Settings;
-import org.libriami.model.tools.compare.FixDuplicates;
+import org.libriami.model.tools.FixDuplicates;
 import org.libriami.model.tools.compare.StringCompare;
 
 public class TestDuplicates extends TestCase {
