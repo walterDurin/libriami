@@ -19,13 +19,20 @@ package org.libriami.coder;
 import java.io.File;
 import java.io.IOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class EncoderFactory {
 
+	final static Logger LOG = LoggerFactory.getLogger(EncoderFactory.class);
+
 	public final static org.libriami.formats.ldif.Encoder getLdifEncoder() {
+		LOG.debug("Creating LDIF Encoder");
 		return new org.libriami.formats.ldif.Encoder();
 	}
 
 	public final static org.libriami.formats.vcard.Encoder getVcardEncoder() {
+		LOG.debug("Creating vCard Encoder");
 		return new org.libriami.formats.vcard.Encoder();
 	}
 

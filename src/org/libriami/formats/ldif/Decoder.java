@@ -32,8 +32,12 @@ import org.libriami.model.ModelException;
 import org.libriami.model.PhoneNumber;
 import org.libriami.model.PhoneNumber.Type;
 import org.libriami.utils.PushBackLineReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Decoder implements org.libriami.coder.Decoder {
+
+	final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
 	@Override
 	public AddressBook decode(BufferedReader bin) throws IOException {
@@ -57,13 +61,13 @@ public class Decoder implements org.libriami.coder.Decoder {
 					|| e.find("objectclass", "person") != null) {
 
 				// String dn = e.get("dn").getValue();
-				String givenname = e.get("givenName") != null ? e.get("givenName").getValue() : "";
-				String surname = e.get("sn") != null ? e.get("sn").getValue() : "";
+				String givenname = e.getFirst("givenName") != null ? e.getFirst("givenName").getValue() : "";
+				String surname = e.getFirst("sn") != null ? e.getFirst("sn").getValue() : "";
 				Contact contact = new Contact(givenname, surname);
 
-				LdifData byear = e.get("birthyear");
-				LdifData bmonth = e.get("birthmonth");
-				LdifData bday = e.get("birthday");
+				LdifData byear = e.getFirst("birthyear");
+				LdifData bmonth = e.getFirst("birthmonth");
+				LdifData bday = e.getFirst("birthday");
 				if (bday != null && bmonth != null) {
 					int day = Integer.parseInt(bday.getValue());
 					int month = Integer.parseInt(bmonth.getValue());
@@ -78,29 +82,29 @@ public class Decoder implements org.libriami.coder.Decoder {
 				// l: Stuttgart
 				// postalcode: 71234,
 				// streetaddress: Groﬂe Straﬂe 8
-				if (e.get("l") != null || e.get("postalcode") != null || e.get("streetaddress") != null) {
+				if (e.getFirst("l") != null || e.getFirst("postalcode") != null || e.getFirst("streetaddress") != null) {
 					// FIXME: This is just the german style!! Needs to be more
 					// flexible!
 					StringBuilder sb = new StringBuilder();
-					sb.append(e.get("streetaddress") != null ? e.get("streetaddress").getValue() : "").append("\n");
-					sb.append(e.get("postalcode") != null ? e.get("postalcode").getValue() : "").append(" ");
-					sb.append(e.get("l") != null ? e.get("l").getValue() : "").append("\n");
+					sb.append(e.getFirst("streetaddress") != null ? e.getFirst("streetaddress").getValue() : "").append("\n");
+					sb.append(e.getFirst("postalcode") != null ? e.getFirst("postalcode").getValue() : "").append(" ");
+					sb.append(e.getFirst("l") != null ? e.getFirst("l").getValue() : "").append("\n");
 					Address address = new Address(sb.toString());
 					contact.getAddress().add(address);
 				}
 
 				// mozillaHomeStreet: Hofackerstr. 41 73660 Urbach
-				if (e.get("mozillaHomeStreet") != null) {
+				if (e.getFirst("mozillaHomeStreet") != null) {
 					List<String> lines = new ArrayList<String>();
-					lines.add(e.get("mozillaHomeStreet").getValue());
+					lines.add(e.getFirst("mozillaHomeStreet").getValue());
 					Address address = new Address(lines);
 					contact.getAddress().add(address);
 				}
 
 				try {
 					// mail: alfred.maxxx@beoxxx.com
-					if (e.get("mail") != null) {
-						EmailAddress email = new EmailAddress(e.get("mail").getValue());
+					if (e.getFirst("mail") != null) {
+						EmailAddress email = new EmailAddress(e.getFirst("mail").getValue());
 						contact.getEmail().add(email);
 					}
 				} catch (ModelException exc) {
@@ -109,8 +113,8 @@ public class Decoder implements org.libriami.coder.Decoder {
 
 				try {
 					// mozillaSecondEmail: amaxx@axxx.de
-					if (e.get("mozillaSecondEmail") != null) {
-						EmailAddress email = new EmailAddress(e.get("mozillaSecondEmail").getValue());
+					if (e.getFirst("mozillaSecondEmail") != null) {
+						EmailAddress email = new EmailAddress(e.getFirst("mozillaSecondEmail").getValue());
 						contact.getEmail().add(email);
 					}
 				} catch (ModelException exc) {
@@ -118,20 +122,20 @@ public class Decoder implements org.libriami.coder.Decoder {
 				}
 
 				// telephoneNumber: +4915xx // WORK
-				if (e.get("telephoneNumber") != null) {
-					PhoneNumber number = new PhoneNumber(e.get("telephoneNumber").getValue(), Type.WORK);
+				if (e.getFirst("telephoneNumber") != null) {
+					PhoneNumber number = new PhoneNumber(e.getFirst("telephoneNumber").getValue(), Type.WORK);
 					contact.getPhone().add(number);
 				}
 
 				// mobile: +49151xx // MOBILE
-				if (e.get("mobile") != null) {
-					PhoneNumber number = new PhoneNumber(e.get("mobile").getValue(), PhoneNumber.Type.CELL);
+				if (e.getFirst("mobile") != null) {
+					PhoneNumber number = new PhoneNumber(e.getFirst("mobile").getValue(), PhoneNumber.Type.CELL);
 					contact.getPhone().add(number);
 				}
 
 				// homePhone: +49718xxx // HOME
-				if (e.get("homePhone") != null) {
-					PhoneNumber number = new PhoneNumber(e.get("homePhone").getValue(), Type.HOME);
+				if (e.getFirst("homePhone") != null) {
+					PhoneNumber number = new PhoneNumber(e.getFirst("homePhone").getValue(), Type.HOME);
 					contact.getPhone().add(number);
 				}
 
@@ -140,7 +144,7 @@ public class Decoder implements org.libriami.coder.Decoder {
 			} else {
 
 				// Skipping LDIF element because no contact information
-				listener.warn(null, "Skipping LDIF element, because it does not contain person objectclass: " + e.get("dn"));
+				listener.warn(null, "Skipping LDIF element, because it does not contain person objectclass: " + e.getFirst("dn"));
 
 			}
 		}

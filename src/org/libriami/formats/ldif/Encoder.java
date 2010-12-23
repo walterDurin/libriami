@@ -29,8 +29,12 @@ import org.libriami.model.Birthday;
 import org.libriami.model.Contact;
 import org.libriami.model.PhoneNumber;
 import org.libriami.utils.StringEncoder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Encoder implements org.libriami.coder.Encoder {
+
+	final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
 	@Override
 	public void encode(AddressBook addressBook, BufferedWriter out) throws IOException {

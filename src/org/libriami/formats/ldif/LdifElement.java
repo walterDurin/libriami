@@ -21,7 +21,7 @@ import java.util.List;
 
 public class LdifElement {
 
-	private List<LdifData> lines = new ArrayList<LdifData>();
+	private final List<LdifData> lines = new ArrayList<LdifData>();
 
 	public void add(LdifData data) {
 		lines.add(data);
@@ -47,13 +47,23 @@ public class LdifElement {
 		return found;
 	}
 
-	public LdifData get(String name) {
+	public LdifData getFirst(String name) {
 		for (LdifData data : lines) {
 			if (name.equalsIgnoreCase(data.getName())) {
 				return data;
 			}
 		}
 		return null;
+	}
+
+	public List<LdifData> get(String name) {
+		List<LdifData> searchList = new ArrayList<LdifData>();
+		for (LdifData data : lines) {
+			if (name.equalsIgnoreCase(data.getName())) {
+				searchList.add(data);
+			}
+		}
+		return searchList;
 	}
 
 	public boolean isEmpty() {

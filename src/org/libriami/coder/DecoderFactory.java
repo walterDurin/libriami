@@ -24,13 +24,20 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class DecoderFactory {
 
+	final static Logger LOG = LoggerFactory.getLogger(DecoderFactory.class);
+
 	public final static Decoder getLdifDecoder() {
+		LOG.debug("Creating LDIF Decoder");
 		return new org.libriami.formats.ldif.Decoder();
 	}
 
 	public final static Decoder getVcardDecoder() {
+		LOG.debug("Creating vCard Decoder");
 		return new org.libriami.formats.vcard.Decoder();
 	}
 
