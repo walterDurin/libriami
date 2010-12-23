@@ -1,0 +1,46 @@
+<project name="libriami" default="dist" basedir=".">
+	<description>Libriami ANT Build</description>
+
+	<property name="src" location="src" />
+	<property name="lib" location="lib" />
+
+	<property name="build" location="build" />
+
+
+	<target name="init">
+		<tstamp />
+		<mkdir dir="${build}" />
+	</target>
+
+	<target name="compile" depends="init" description="compile the source ">
+		<javac srcdir="${src}" destdir="${build}">
+			<classpath>
+				<pathelement path="${classpath}" />
+				<fileset dir="${lib}">
+					<include name="**/*.jar" />
+				</fileset>
+				<pathelement location="${classes}" />
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="dist" depends="compile" description="generate the distribution">
+		<delete file="${build}/libriami.jar" />
+		<jar jarfile="${build}/libriami.jar" basedir="${build}" manifest="Manifest.mf">
+			<!--
+			<fileset dir="${lib}">
+				<include name="**/*.jar" />
+			</fileset>
+			-->
+		</jar>
+		<copy todir="${build}">
+			<fileset dir="${lib}">
+				<include name="**/*.jar" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="clean" description="clean up">
+		<delete dir="${build}" />
+	</target>
+</project>

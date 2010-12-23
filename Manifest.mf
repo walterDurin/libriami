@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+Main-Class: org.libriami.CmdLine
+Class-Path: commons-cli-1.2.jar commons-codec-1.4.jar junit-4.8.2.jar slf4j-api-1.6.1.jar slf4j-simple-1.6.1.jar
