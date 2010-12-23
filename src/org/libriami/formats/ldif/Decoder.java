@@ -35,10 +35,12 @@ import org.libriami.utils.PushBackLineReader;
 
 public class Decoder implements org.libriami.coder.Decoder {
 
+	@Override
 	public AddressBook decode(BufferedReader bin) throws IOException {
 		return decode(bin, new ConsoleCoderListener());
 	}
 
+	@Override
 	public AddressBook decode(BufferedReader bin, CoderListener listener) throws IOException {
 
 		AddressBook addressBook = new AddressBook();
@@ -96,7 +98,7 @@ public class Decoder implements org.libriami.coder.Decoder {
 				}
 
 				try {
-					// mail: alfred.mayer@beoxxx.com
+					// mail: alfred.maxxx@beoxxx.com
 					if (e.get("mail") != null) {
 						EmailAddress email = new EmailAddress(e.get("mail").getValue());
 						contact.getEmail().add(email);
@@ -106,7 +108,7 @@ public class Decoder implements org.libriami.coder.Decoder {
 				}
 
 				try {
-					// mozillaSecondEmail: amayer@axxx.de
+					// mozillaSecondEmail: amaxx@axxx.de
 					if (e.get("mozillaSecondEmail") != null) {
 						EmailAddress email = new EmailAddress(e.get("mozillaSecondEmail").getValue());
 						contact.getEmail().add(email);
