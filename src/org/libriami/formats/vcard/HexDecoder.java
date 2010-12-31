@@ -31,6 +31,12 @@ public class HexDecoder {
 			// Home=0D=0ADeutschland
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 
+			s = s.replaceAll("==", "=");
+			if (s.endsWith("="))
+				s = s.substring(0, s.length() - 1);
+
+			System.out.println(s);
+
 			StringReader in = new StringReader(s);
 			int k;
 			while ((k = in.read()) >= 0) {
@@ -60,7 +66,7 @@ public class HexDecoder {
 			// // s = s.replaceAll(" ", "");
 			// // return Hex.decodeHex(s.toCharArray());
 		} catch (DecoderException e) {
-			throw new IOException("Decoding hex failed " + e);
+			throw new IOException("Decoding hex failed " + e + ", string: " + s);
 		}
 	}
 

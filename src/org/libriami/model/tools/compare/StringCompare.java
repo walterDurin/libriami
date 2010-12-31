@@ -63,6 +63,9 @@ public class StringCompare {
 			} else if (a.equals("")) {
 				return b.equals("") ? 1.0 : 0.0;
 			} else {
+				a = a.replaceAll(" ", ""); // FIXME: Improvements welcome...
+				b = b.replaceAll(" ", "");
+
 				int max = Math.max(a.length(), b.length());
 				int ld;
 

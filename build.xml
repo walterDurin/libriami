@@ -6,6 +6,8 @@
 
 	<property name="build" location="build" />
 
+	<property name="bversion" value="0.0.1" />
+	<property name="distfile" value="${build}/libriami_${bversion}.zip" />
 
 	<target name="init">
 		<tstamp />
@@ -37,7 +39,17 @@
 			<fileset dir="${lib}">
 				<include name="**/*.jar" />
 			</fileset>
+			<fileset dir="">
+				<include name="*.txt" />
+			</fileset>
 		</copy>
+		<delete file="${distfile}" />
+		<zip destfile="${distfile}">
+			<fileset dir="${build}">
+				<include name="*.jar" />
+				<include name="*.txt" />
+			</fileset>
+		</zip>
 	</target>
 
 	<target name="clean" description="clean up">

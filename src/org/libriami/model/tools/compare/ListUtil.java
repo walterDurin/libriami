@@ -96,6 +96,8 @@ public final class ListUtil {
 		for (String s : l) {
 			sb.append(s);
 		}
-		return sb.toString();
+		String s = sb.toString();
+		// s = s.replaceAll(" ", ""); // TODO: Trim more chars and more efficiently
+		return s;
 	}
 }
